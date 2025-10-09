@@ -19,3 +19,4 @@ function PlayerCarryVR:_check_use_item(t, input)
 	managers.player:player_unit():movement():current_state():set_throwing_projectile(self._unit:hand():get_active_hand_id("bag"))
 	return true
 end
+Eclipse.log("Loaded playercarryvr")

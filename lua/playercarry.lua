@@ -215,3 +215,4 @@ function PlayerCarry:_get_walk_headbob(...)
 	multiplier = math.clamp(multiplier * managers.player:upgrade_value("player", "mrwi_carry_speed_multiplier", 1), 0, 1)
 	return PlayerCarry.super._get_walk_headbob(self, ...) * multiplier
 end
+Eclipse.log("Loaded playercarry")
