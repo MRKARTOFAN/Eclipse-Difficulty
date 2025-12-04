@@ -25,6 +25,177 @@ WeaponFactoryTweakData.parts_from_template = {
 	["wpn_upg_saiga_m_20rnd"] = "wpn_fps_sho_basset_m_extended",
 	["wpn_fps_upg_charm_eclipse"] = "wpn_fps_upg_charm_cloaker",
 }
+WeaponFactoryTweakData.part_presets = {
+	barrel = {},
+	foregrip = {
+		stab_sub_conc_aim_add_t1 = {
+			concealment = 1,
+			steelsight = 1,
+			recoil = -2,
+		},
+		stab_sub_conc_aim_add_t2 = {
+			concealment = 2,
+			steelsight = 2,
+			recoil = -4,
+		},
+		acc_sub_conc_aim_add_t1 = {
+			concealment = 1,
+			steelsight = 1,
+			spread = -2,
+		},
+		acc_sub_conc_aim_add_t2 = {
+			concealment = 2,
+			steelsight = 2,
+			spread = -4,
+		},
+		stab_sub_conc_acc_aim_add_t1 = {
+			concealment = 1,
+			steelsight = 1,
+			spread = 1,
+			recoil = -3,
+		},
+		acc_sub_conc_stab_aim_add_t1 = {
+			concealment = 1,
+			steelsight = 1,
+			recoil = 1,
+			spread = -3,
+		},
+		conc_aim_sub_stab_add_t1 = {
+			concealment = -1,
+			steelsight = -1,
+			recoil = 2,
+		},
+		conc_aim_sub_stab_add_t2 = {
+			concealment = -2,
+			steelsight = -2,
+			recoil = 4,
+		},
+		conc_aim_sub_acc_add_t1 = {
+			concealment = -1,
+			steelsight = -1,
+			spread = 2,
+		},
+		conc_aim_sub_acc_add_t2 = {
+			concealment = -2,
+			steelsight = -2,
+			spread = 4,
+		},
+		conc_acc_aim_sub_stab_add_t1 = {
+			concealment = -1,
+			steelsight = -1,
+			recoil = 3,
+			spread = -1,
+		},
+		conc_stab_aim_sub_acc_add_t1 = {
+			concealment = -1,
+			steelsight = -1,
+			spread = 3,
+			recoil = -1,
+		},
+	},
+	grip = {
+		stab_sub_conc_swap_add_t1 = {
+			concealment = 1,
+			swap_speed = 1,
+			recoil = -2,
+		},
+		acc_sub_conc_swap_add_t1 = {
+			concealment = 1,
+			swap_speed = 1,
+			spread = -2,
+		},
+		stab_sub_stab_conc_swap_add_t1 = {
+			concealment = 1,
+			swap_speed = 1,
+			recoil = 1,
+			spread = -3,
+		},
+		stab_sub_acc_conc_swap_add_t1 = {
+			concealment = 1,
+			swap_speed = 1,
+			spread = 1,
+			recoil = -3,
+		},
+		swap_sub_stab_add_t2 = {
+			swap_speed = -2,
+			recoil = 2,
+		},
+		swap_sub_acc_add_t1 = {
+			swap_speed = -1,
+			spread = 1,
+		},
+		swap_sub_acc_add_t2 = {
+			swap_speed = -2,
+			spread = 2,
+		},
+		conc_swap_sub_stab_add_t1 = {
+			concealment = -1,
+			swap_speed = -1,
+			recoil = 2,
+		},
+		conc_swap_sub_acc_add_t1 = {
+			concealment = -1,
+			swap_speed = -1,
+			spread = 2,
+		},
+	},
+	stock = {
+		stab_sub_aim_conc_add_t1 = {
+			concealment = 1,
+			steelsight = 1,
+			recoil = -2,
+		},
+		stab_sub_aim_conc_add_t2 = {
+			concealment = 2,
+			steelsight = 2,
+			recoil = -4,
+		},
+		acc_sub_aim_conc_add_t1 = {
+			concealment = 1,
+			steelsight = 1,
+			spread = -2,
+		},
+		acc_sub_aim_conc_add_t2 = {
+			concealment = 2,
+			steelsight = 2,
+			spread = -4,
+		},
+		aim_conc_sub_stab_add_t1 = {
+			concealment = -1,
+			steelsight = -1,
+			recoil = 2,
+		},
+		aim_conc_sub_stab_add_t2 = {
+			concealment = -2,
+			steelsight = -2,
+			recoil = 4,
+		},
+		aim_conc_sub_acc_add_t1 = {
+			concealment = -1,
+			steelsight = -1,
+			spread = 2,
+		},
+		aim_conc_sub_acc_add_t2 = {
+			concealment = -2,
+			steelsight = -2,
+			spread = 4,
+		},
+		aim_conc_sub_acc_stab_add_t1 = {
+			concealment = -1,
+			steelsight = -1,
+			recoil = 1,
+			spread = 1,
+		},
+		aim_conc_sub_acc_stab_add_t2 = {
+			concealment = -2,
+			steelsight = -2,
+			recoil = 2,
+			spread = 2,
+		},
+	},
+	vertical_grip = {
+	},
+}
 
 function WeaponFactoryTweakData:_add_parts_to_all(tweak_data)
 	local upgrade_definitions = tweak_data.upgrades.definitions
@@ -193,8 +364,8 @@ Hooks:PostHook(WeaponFactoryTweakData, "init", "eclipse_init", function(self)
 	table.delete(self.wpn_fps_ass_tecci.uses_parts, "wpn_fps_upg_i_singlefire")
 	table.delete(self.wpn_fps_ass_tecci.uses_parts, "wpn_fps_upg_i_autofire")
 
-	table.insert(self.wpn_fps_ass_ak5.uses_parts, "wpn_fps_upg_ak_ns_zenitco")
-	table.insert(self.wpn_fps_shot_saiga.uses_parts, "wpn_fps_upg_ak_ns_zenitco")
+	table.delete(self.wpn_fps_ass_ak5.uses_parts, "wpn_fps_upg_ak_ns_zenitco")
+	table.delete(self.wpn_fps_shot_saiga.uses_parts, "wpn_fps_upg_ak_ns_zenitco")
 
 	-- Akimbo SMG default blueprints
 	table.delete(self.wpn_fps_smg_x_mac10.default_blueprint, "wpn_fps_smg_mac10_s_fold")
@@ -370,11 +541,14 @@ Hooks:PostHook(WeaponFactoryTweakData, "init", "eclipse_init", function(self)
 	self.parts.wpn_fps_ass_ching_s_pouch.stats.concealment = -2
 
 	-- Pistol mods
-	self.parts.wpn_fps_pis_g17_ck.stats.spread = 0
-	self.parts.wpn_fps_pis_g17_ck.stats.recoil = 0
+	self.parts.wpn_fps_pis_g18c_m_mag_33rnd.stats.extra_ammo = 7
 
-	self.parts.wpn_fps_pis_g18c_m_mag_33rnd.stats.extra_ammo = 8
-
+	self.parts.wpn_fps_pis_g17_m_mag_33rnd = deep_clone(self.parts.wpn_fps_pis_g18c_m_mag_33rnd)
+	self.parts.wpn_fps_pis_g17_m_mag_33rnd.stats.extra_ammo = 8
+	
+	table.delete(self.wpn_fps_pis_g17.uses_parts, "wpn_fps_pis_g18c_m_mag_33rnd")
+	table.insert(self.wpn_fps_pis_g17.uses_parts, "wpn_fps_pis_g17_m_mag_33rnd")
+	
 	self.parts.wpn_fps_pis_beretta_m_extended.stats.extra_ammo = 5
 
 	self.parts.wpn_fps_pis_1911_b_long.stats.spread = 2
@@ -2036,13 +2210,15 @@ function WeaponFactoryTweakData:_balance_magazine(tweak_data, part_id, no_stat_w
 							local mod_mag_capacity = (2 * (extra_ammo_stat or 0)) + (ammo_offset_stat or 0)
 							local capacity_increase = (mod_mag_capacity / mag_capacity) * 100
 
-							local reload_stat = -math.clamp(math.ceil(capacity_increase / 25), -10, 10)
-							local concealment_stat = -math.clamp(math.ceil(capacity_increase / 25), -6, 6)
-							local spread_stat = capacity_increase >= 100 and -math.clamp(math.floor(capacity_increase / 75), 0, 6) or 0
-							local recoil_stat = capacity_increase >= 100 and math.clamp(math.floor(capacity_increase / 100), 0, 6) or 0
+							local reload_stat = -math.clamp(math.floor(capacity_increase / 20), -6, 6)
+							local concealment_stat = -math.clamp(math.round(capacity_increase / 25), -10, 10)
+							local swap_stat = math.floor(concealment_stat * 0.8)
+							local spread_stat = (capacity_increase >= 100 and -math.clamp(math.floor(capacity_increase / 75), 0, 10) or 0) * 2
+							local recoil_stat = (capacity_increase >= 100 and math.clamp(math.floor(capacity_increase / 100), 0, 10) or 0) * 2
 
 							part_data.stats.recoil = (no_stat_wipe and (part_data.stats.recoil or 0) or 0) + recoil_stat
 							part_data.stats.spread = (no_stat_wipe and (part_data.stats.spread or 0) or 0) + spread_stat
+							part_data.stats.swap_time = (no_stat_wipe and (part_data.stats.swap_time or 0) or 0) + swap_stat
 							part_data.stats.concealment = (no_stat_wipe and (part_data.stats.concealment or 0) or 0) + concealment_stat
 							part_data.stats.reload = (no_stat_wipe and (part_data.stats.reload or 0) or 0) + reload_stat
 							part_data.is_supported = true
@@ -2080,7 +2256,7 @@ function WeaponFactoryTweakData:_balance_underbarrel(tweak_data, part_id)
 				local weap_total_ammo = weapon_tweak.AMMO_MAX
 				local damage_ratio_round = math.round(weap_total_ammo * 0.5, weapon_tweak.CLIP_AMMO_MAX) / weap_total_ammo
 
-				self[factory_id].override[part_id].custom_stats.ammo_max_mul = damage_ratio_round
+				self[factory_id].override[part_id].custom_stats.ammo_max_multiplier = damage_ratio_round
 			end
 		end
 	end
@@ -2126,13 +2302,13 @@ function WeaponFactoryTweakData:_balance_conversion_kit(tweak_data, weap_id, par
 		local stats_tbl = {}
 		local custom_stats_tbl = {}
 		if reference_new_tweak and reference_old_tweak then
-			custom_stats_tbl.ammo_max_mul = reference_new_tweak.total_ammo_mul or 1
+			custom_stats_tbl.ammo_max_multiplier = reference_new_tweak.total_ammo_mul or 1
 			custom_stats_tbl.ammo_pickup_max_mul = reference_new_tweak.pickup_mul or 1
 			custom_stats_tbl.ammo_pickup_min_mul = reference_new_tweak.pickup_mul or 1
-			custom_stats_tbl.steelsight_move_speed_mul = reference_new_tweak.steelsight_move_speed_mul or reference_old_tweak.steelsight_move_speed_mul
-			custom_stats_tbl.steelsight_time_mul = reference_new_tweak.steelsight_time
+			custom_stats_tbl.steelsight_move_speed_multiplier = reference_new_tweak.steelsight_move_speed_multiplier or reference_old_tweak.steelsight_move_speed_multiplier
+			custom_stats_tbl.steelsight_speed_multiplier = reference_new_tweak.steelsight_time
 					and reference_old_tweak.steelsight_time
-					and (reference_new_tweak.steelsight_time / reference_old_tweak.steelsight_time)
+					and (reference_old_tweak.steelsight_time / reference_new_tweak.steelsight_time)
 				or 1
 			custom_stats_tbl.stance_mul = deep_clone(reference_new_tweak.stance_multipliers or reference_old_tweak.stance_multipliers)
 			custom_stats_tbl.fire_mode_mul = deep_clone(reference_new_tweak.fire_mode_multipliers or reference_old_tweak.fire_mode_multipliers)
@@ -2185,16 +2361,16 @@ function WeaponFactoryTweakData:_balance_conversion_kit(tweak_data, weap_id, par
 			end
 
 			self[factory_id].override[part_id].stats.damage = (self[factory_id].override[part_id].stats.damage or 0) + (part_damage or 0)
-			self[factory_id].override[part_id].custom_stats.ammo_max_mul = (self[factory_id].override[part_id].custom_stats.ammo_max_mul or 1) * (damage_ratio or 1)
+			self[factory_id].override[part_id].custom_stats.ammo_max_multiplier = (self[factory_id].override[part_id].custom_stats.ammo_max_multiplier or 1) * (damage_ratio or 1)
 			self[factory_id].override[part_id].custom_stats.ammo_pickup_max_mul = (self[factory_id].override[part_id].custom_stats.ammo_pickup_max_mul or 1) * (damage_ratio or 1)
 			self[factory_id].override[part_id].custom_stats.ammo_pickup_min_mul = (self[factory_id].override[part_id].custom_stats.ammo_pickup_min_mul or 1) * (damage_ratio or 1)
 
 			if round_total_ammo then
 				local weap_total_ammo = weap_data.AMMO_MAX
-				local part_total_ammo = weap_total_ammo * self[factory_id].override[part_id].custom_stats.ammo_max_mul
+				local part_total_ammo = weap_total_ammo * self[factory_id].override[part_id].custom_stats.ammo_max_multiplier
 				local damage_ratio_round = math.round(part_total_ammo, weap_data.CLIP_AMMO_MAX) / weap_total_ammo
 
-				self[factory_id].override[part_id].custom_stats.ammo_max_mul = damage_ratio_round
+				self[factory_id].override[part_id].custom_stats.ammo_max_multiplier = damage_ratio_round
 			end
 		end
 	end

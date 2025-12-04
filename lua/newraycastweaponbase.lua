@@ -15,18 +15,18 @@ Hooks:PostHook(NewRaycastWeaponBase, "init", "eclipse_init", function(self)
 end)
 
 Hooks:PostHook(NewRaycastWeaponBase, "_update_stats_values", "eclipse_update_stats_values", function(self, disallow_replenish)
+	local stats = managers.weapon_factory:get_stats(self._factory_id, self._blueprint)
 	local custom_stats = managers.weapon_factory:get_custom_stats_from_weapon(self._factory_id, self._blueprint)
 	local weapon_tweak = self:weapon_tweak_data()
-
-	local fire_mode_data = self:weapon_tweak_data().fire_mode_data or {}
-	local toggable_fire_modes = fire_mode_data and fire_mode_data.toggable
-
+	
 	if not disallow_replenish and not (self._name_id and self._name_id:find("crew")) then
 		-- Extra start out ammo upgrade
 		local is_starting_out_with_extra_ammo = managers.player:has_category_upgrade("player", "start_out_ammo_multiplier")
 		self:replenish(is_starting_out_with_extra_ammo)
 	end
 
+	local fire_mode_data = self:weapon_tweak_data().fire_mode_data or {}
+	local toggable_fire_modes = fire_mode_data and fire_mode_data.toggable
 	if toggable_fire_modes then
 		self._toggable_fire_modes = {}
 
@@ -37,26 +37,57 @@ Hooks:PostHook(NewRaycastWeaponBase, "_update_stats_values", "eclipse_update_sta
 		end
 	end
 
+	-- Add and properly scale new steelsight and swap_time stats
+	local new_stats = {}
+	local parts_stats = managers.weapon_factory:get_stats(self._factory_id, self._blueprint)
+	local bonus_stats = self._cosmetics_bonus and self._cosmetics_data and self._cosmetics_data.bonus and tweak_data.economy.bonuses[self._cosmetics_data.bonus] and tweak_data.economy.bonuses[self._cosmetics_data.bonus].stats or {}
+	
+	new_stats.steelsight = self:weapon_tweak_data().stats.steelsight
+	new_stats.swap_time = self:weapon_tweak_data().stats.swap_time
+	
+	for new_stat, _ in pairs(new_stats) do
+		if parts_stats[new_stat] then
+			new_stats[new_stat] = new_stats[new_stat] + parts_stats[new_stat]
+		end
+
+		if bonus_stats[new_stat] then
+			new_stats[new_stat] = new_stats[new_stat] + bonus_stats[new_stat]
+		end
+
+		new_stats[new_stat] = math.clamp(new_stats[new_stat], 1, #tweak_data.weapon.stats[new_stat])
+	end
+
+	for new_stat, i in pairs(new_stats) do
+		self._current_stats[new_stat] = tweak_data.weapon.stats[new_stat] and tweak_data.weapon.stats[new_stat][i] or 1
+
+		if self:weapon_tweak_data().stats_modifiers and self:weapon_tweak_data().stats_modifiers[new_stat] then
+			self._current_stats[new_stat] = self._current_stats[new_stat] * self:weapon_tweak_data().stats_modifiers[new_stat]
+		end
+	end
+	
+	self._steelsight = 	self._current_stats.steelsight or self._steelsight
+	self._swap_time = self._current_stats.swap_time or self._swap_time
+	
+	-- explosive_ammo flag for Bulletstorm
 	self._explosive_ammo = weapon_tweak.explosive_ammo
 
 	self._fire_modes = toggable_fire_modes or weapon_tweak.CAN_TOGGLE_FIREMODE and { "auto", "single" } or { "single" }
 
-	self._steelsight_move_speed_mul = weapon_tweak.steelsight_move_speed_mul or 0.6
-
+	-- Define steelsight_time and sprint_exit_time as timers in weapontweakdata
 	self._steelsight_time = weapon_tweak.steelsight_time or 0.25
-
 	self._sprint_exit_time = weapon_tweak.sprint_exit_time or 0.4
-
+	
+	-- Add a bunch of multipliers to make scaling easier 
+	self._steelsight_move_speed_multiplier = weapon_tweak.steelsight_move_speed_multiplier or 0.5
 	self._swap_speed_multiplier = weapon_tweak.swap_speed_multiplier or 1
-
-	self._fire_rate_multiplier = weapon_tweak.fire_rate_multiplier or 1
-
-	self._reload_speed_multiplier = weapon_tweak.reload_speed_multiplier or 1
-
+	self._steelsight_speed_multiplier = weapon_tweak.steelsight_speed_multiplier or 1
 	self._exit_run_speed_multiplier = weapon_tweak.exit_run_speed_multiplier or 1
+	self._reload_speed_multiplier = weapon_tweak.reload_speed_multiplier or 1
+	self._fire_rate_multiplier = weapon_tweak.fire_rate_multiplier or 1
 
 	self._fire_mode_multipliers = weapon_tweak.fire_mode_multipliers or {}
 
+	-- Stance multipliers
 	local recoil_muls = weapon_tweak.stance_multipliers and weapon_tweak.stance_multipliers.recoil
 	local spread_muls = weapon_tweak.stance_multipliers and weapon_tweak.stance_multipliers.spread
 
@@ -82,37 +113,38 @@ Hooks:PostHook(NewRaycastWeaponBase, "_update_stats_values", "eclipse_update_sta
 		end
 	end
 
+	-- Add new multipliers as custom_stats
 	for _, stats in pairs(custom_stats) do
-		if stats.steelsight_move_speed_mul then
-			self._steelsight_move_speed_mul = stats.steelsight_move_speed_mul
+		if stats.steelsight_move_speed_multiplier then
+			self._steelsight_move_speed_multiplier = stats.steelsight_move_speed_multiplier
 		end
 
 		if stats.swap_speed_multiplier then
 			self._swap_speed_multiplier = self._swap_speed_multiplier * stats.swap_speed_multiplier
 		end
 
-		if stats.fire_rate_multiplier then
-			self._fire_rate_multiplier = self._fire_rate_multiplier * stats.fire_rate_multiplier
-		end
-
-		if stats.reload_speed_multiplier then
-			self._reload_speed_multiplier = self._reload_speed_multiplier * stats.reload_speed_multiplier
+		if stats.steelsight_speed_multiplier then
+			self._steelsight_speed_multiplier = self._steelsight_speed_multiplier * stats.steelsight_speed_multiplier
 		end
 
 		if stats.exit_run_speed_multiplier then
 			self._exit_run_speed_multiplier = self._exit_run_speed_multiplier * stats.exit_run_speed_multiplier
 		end
+		
+		if stats.reload_speed_multiplier then
+			self._reload_speed_multiplier = self._reload_speed_multiplier * stats.reload_speed_multiplier
+		end
+		
+		if stats.fire_rate_multiplier then
+			self._fire_rate_multiplier = self._fire_rate_multiplier * stats.fire_rate_multiplier
+		end
+		
+		if stats.ammo_max_multiplier then
+			self._ammo_max_mul = (self._ammo_max_mul or 1) * stats.ammo_max_multiplier
+		end
 
 		if stats.fire_mode_mul then
 			self._fire_mode_multipliers = stats.fire_mode_mul
-		end
-
-		if stats.ammo_max_mul then
-			self._ammo_max_mul = (self._ammo_max_mul or 1) * stats.ammo_max_mul
-		end
-
-		if stats.steelsight_time_mul then
-			self._steelsight_time_mul = (self._steelsight_time_mul or 1) * stats.steelsight_time_mul
 		end
 
 		local stats_stance_mul = stats.stance_mul
@@ -143,32 +175,36 @@ Hooks:PostHook(NewRaycastWeaponBase, "_update_stats_values", "eclipse_update_sta
 	end
 end)
 
+function NewRaycastWeaponBase:steelsight_speed_stat()
+	return self._steelsight
+end
+
+function NewRaycastWeaponBase:swap_time_stat()
+	return self._swap_time
+end
+
+function NewRaycastWeaponBase:swap_speed_multiplier()
+	return self._swap_speed_multiplier
+end
+
+function NewRaycastWeaponBase:steelsight_speed_multiplier()
+	return self._steelsight_speed_multiplier
+end
+
+function NewRaycastWeaponBase:exit_run_speed_multiplier()
+	return self._exit_run_speed_multiplier
+end
+
+function NewRaycastWeaponBase:reload_speed_multiplier()
+	return self._reload_speed_multiplier
+end
+
 function NewRaycastWeaponBase:movement_penalty()
 	if managers.player:has_category_upgrade("player", "no_movement_penalty") then
 		return 1
 	else
 		return self._movement_penalty or 1
 	end
-end
-
--- Calculate weapon swap speed and sprint-to-fire speed based on concealment
-function NewRaycastWeaponBase:concealment_to_handling()
---[[
-	local base_stats = self:weapon_tweak_data().stats
-	local parts_stats = managers.weapon_factory:get_stats(self._factory_id, self._blueprint)
-
-	local multiplier = 1
-
-	local total_concealment = math.max((base_stats and base_stats.concealment or 0) + (parts_stats and parts_stats.concealment or 0), 0)
-	local concealment_stat_table = tweak_data.weapon.stats and tweak_data.weapon.stats.concealment
-
-	local concealment_lerp = total_concealment / #concealment_stat_table
-
-	multiplier = multiplier * math.lerp(0.5, 1.5, concealment_lerp)
-
-	return multiplier
-]]
-	return 1
 end
 
 -- Body Expertise only works on LMGs and Miniguns
@@ -182,11 +218,11 @@ end
 
 function NewRaycastWeaponBase:steelsight_move_speed_multiplier()
 	if managers.player:has_category_upgrade("weapon", "steelsight_move_speed_penalty_multiplier") then
-		local speed_penalty = 1 - self._steelsight_move_speed_mul
+		local speed_penalty = 1 - self._steelsight_move_speed_multiplier
 		return (1 - speed_penalty * managers.player:upgrade_value("weapon", "steelsight_move_speed_penalty_multiplier", 1))
 	end
 
-	return self._steelsight_move_speed_mul
+	return self._steelsight_move_speed_multiplier
 end
 
 function NewRaycastWeaponBase:fire(...)
@@ -492,10 +528,12 @@ function NewRaycastWeaponBase:enter_steelsight_speed_multiplier()
 	local weapon_tweak = self:weapon_tweak_data()
 	local categories = weapon_tweak.categories
 
-	local steelsight_time = (tweak_data.player.TRANSITION_DURATION or 0.23) / (self._steelsight_time * (self._steelsight_time_mul or 1))
-
 	local multiplier = 1
+	local steelsight_time = (tweak_data.player.TRANSITION_DURATION or 0.23) / self._steelsight_time
 
+	multiplier = multiplier + 1 - self:steelsight_speed_stat()
+	multiplier = multiplier + 1 - self:steelsight_speed_multiplier()
+	
 	for _, category in ipairs(categories) do
 		multiplier = multiplier + 1 - managers.player:upgrade_value(category, "enter_steelsight_speed_multiplier", 1)
 	end
@@ -515,6 +553,21 @@ function NewRaycastWeaponBase:enter_steelsight_speed_multiplier()
 	multiplier = self:_convert_add_to_mul(multiplier)
 
 	multiplier = multiplier * steelsight_time
+
+	return multiplier
+end
+
+function RaycastWeaponBase:exit_run_speed_multiplier()
+	local weapon_tweak = tweak_data.weapon[self._name_id]
+	local multiplier = 0.4 / self._sprint_exit_time
+
+	multiplier = multiplier * self:swap_speed_multiplier()
+	
+	for _, category in ipairs(self:weapon_tweak_data().categories) do
+		multiplier = multiplier * managers.player:upgrade_value(category, "exit_run_speed_multiplier", 1)
+	end
+
+	multiplier = multiplier * managers.player:upgrade_value(self._name_id, "exit_run_speed_multiplier", 1)
 
 	return multiplier
 end
