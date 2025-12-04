@@ -795,8 +795,8 @@ function WeaponTweakData:_init_weapons()
 			weap_data.stats.spread = math.clamp(weap_data.stats.spread * 2, 1, #self.stats.spread)
 			weap_data.stats.alert_size = math.clamp(weap_data.stats.alert_size, 1, #self.stats.alert_size)
 			weap_data.stats.reload = 11
-			weap_data.stats.steelsight = weap_data.stats.steelsight or 11
-			weap_data.stats.swap_time = weap_data.stats.swap_time or 11
+			weap_data.stats.steelsight = 11
+			weap_data.stats.swap_time = 11
 			weap_data.panic_suppression_chance = 0.2
 			weap_data.sprint_exit_time = weap_data.sprint_exit_time or 0.4
 			weap_data.steelsight_time = weap_data.steelsight_time or steelsight_times.default
@@ -1288,8 +1288,6 @@ Hooks:PostHook(WeaponTweakData, "init", "eclipse_init", function(self, tweak_dat
 	self.ak74.stats.spread = 15
 	self.ak74.stats.recoil = 16
 	self.ak74.stats.concealment = 20
-	self.ak74.stats.swap_time = 1
-	self.ak74.stats.steelsight = 1
 	self.ak74.fire_mode_data.fire_rate = 60 / 650
 
 	-- Commando 553
