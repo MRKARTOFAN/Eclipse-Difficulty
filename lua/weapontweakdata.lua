@@ -43,15 +43,15 @@ Hooks:PostHook(WeaponTweakData, "_init_stats", "eclipse_init_stats", function(se
 end)
 
 local steelsight_times = {
-	default = 0.25,
+	default = 0.3,
 	pistol = 0.15,
 	pistol_heavy = 0.2,
 	smg = 0.2,
 	lmg_light = 0.3,
-	dmr = 0.3,
-	snp = 0.3,
-	snp_heavy = 0.4,
-	lmg = 0.4,
+	dmr = 0.4,
+	snp = 0.45,
+	snp_heavy = 0.5,
+	lmg = 0.45,
 }
 
 function WeaponTweakData:_init_weapons()
@@ -791,8 +791,8 @@ function WeaponTweakData:_init_weapons()
 			end
 
 			weap_data.stats.zoom = 1
-			weap_data.stats.recoil = math.clamp(weap_data.stats.recoil * 2, 1, #self.stats.recoil)
-			weap_data.stats.spread = math.clamp(weap_data.stats.spread * 2, 1, #self.stats.spread)
+			weap_data.stats.recoil = math.clamp((weap_data.stats.recoil * 2) + 1, 1, #self.stats.recoil) 
+			weap_data.stats.spread = math.clamp((weap_data.stats.spread * 2) + 1, 1, #self.stats.spread)
 			weap_data.stats.alert_size = math.clamp(weap_data.stats.alert_size, 1, #self.stats.alert_size)
 			weap_data.stats.reload = 11
 			weap_data.stats.steelsight = 11
@@ -2401,7 +2401,7 @@ Hooks:PostHook(WeaponTweakData, "init", "eclipse_init", function(self, tweak_dat
 	self.m134.stats.spread = 9
 	self.m134.stats.recoil = 7
 	self.m134.stats.concealment = 6
-	self.m134.fire_mode_data.fire_rate = 60 / 3000
+	self.m134.fire_mode_data.fire_rate = 60 / 2000
 	self.m134.sprint_exit_time = 0.8
 	self.m134.exit_run_speed_multiplier = 2
 	--self.m134.spray = spray_tables.mini
@@ -2836,7 +2836,7 @@ Hooks:PostHook(WeaponTweakData, "init", "eclipse_init", function(self, tweak_dat
 	-- Midland Ranch Turret
 	self.ranc_heavy_machine_gun.CLIP_AMMO_MAX = 200
 	self.ranc_heavy_machine_gun.stats.damage = 60
-	self.ranc_heavy_machine_gun.stats.spread = 19
+	self.ranc_heavy_machine_gun.stats.spread = 21
 	self.ranc_heavy_machine_gun.stats.recoil = 21
 	self.ranc_heavy_machine_gun.stats.concealment = 20
 	self.ranc_heavy_machine_gun.fire_mode_data.fire_rate = 60 / 400

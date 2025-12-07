@@ -1,12 +1,13 @@
 WeaponFactoryTweakData.part_type_stat_blacklist = {
+	barrel = true,
 	body = true,
 	bolt = true,
 	drag_handle = true,
 	exclusive_set = true,
 	extra = true,
 	foregrip = true,
-	gadget = true,
 	grip = true,
+	gadget = true,
 	lower_body = true,
 	lower_reciever = true,
 	slide = true,
@@ -25,177 +26,7 @@ WeaponFactoryTweakData.parts_from_template = {
 	["wpn_upg_saiga_m_20rnd"] = "wpn_fps_sho_basset_m_extended",
 	["wpn_fps_upg_charm_eclipse"] = "wpn_fps_upg_charm_cloaker",
 }
-WeaponFactoryTweakData.part_presets = {
-	barrel = {},
-	foregrip = {
-		stab_sub_conc_aim_add_t1 = {
-			concealment = 1,
-			steelsight = 1,
-			recoil = -2,
-		},
-		stab_sub_conc_aim_add_t2 = {
-			concealment = 2,
-			steelsight = 2,
-			recoil = -4,
-		},
-		acc_sub_conc_aim_add_t1 = {
-			concealment = 1,
-			steelsight = 1,
-			spread = -2,
-		},
-		acc_sub_conc_aim_add_t2 = {
-			concealment = 2,
-			steelsight = 2,
-			spread = -4,
-		},
-		stab_sub_conc_acc_aim_add_t1 = {
-			concealment = 1,
-			steelsight = 1,
-			spread = 1,
-			recoil = -3,
-		},
-		acc_sub_conc_stab_aim_add_t1 = {
-			concealment = 1,
-			steelsight = 1,
-			recoil = 1,
-			spread = -3,
-		},
-		conc_aim_sub_stab_add_t1 = {
-			concealment = -1,
-			steelsight = -1,
-			recoil = 2,
-		},
-		conc_aim_sub_stab_add_t2 = {
-			concealment = -2,
-			steelsight = -2,
-			recoil = 4,
-		},
-		conc_aim_sub_acc_add_t1 = {
-			concealment = -1,
-			steelsight = -1,
-			spread = 2,
-		},
-		conc_aim_sub_acc_add_t2 = {
-			concealment = -2,
-			steelsight = -2,
-			spread = 4,
-		},
-		conc_acc_aim_sub_stab_add_t1 = {
-			concealment = -1,
-			steelsight = -1,
-			recoil = 3,
-			spread = -1,
-		},
-		conc_stab_aim_sub_acc_add_t1 = {
-			concealment = -1,
-			steelsight = -1,
-			spread = 3,
-			recoil = -1,
-		},
-	},
-	grip = {
-		stab_sub_conc_swap_add_t1 = {
-			concealment = 1,
-			swap_speed = 1,
-			recoil = -2,
-		},
-		acc_sub_conc_swap_add_t1 = {
-			concealment = 1,
-			swap_speed = 1,
-			spread = -2,
-		},
-		stab_sub_stab_conc_swap_add_t1 = {
-			concealment = 1,
-			swap_speed = 1,
-			recoil = 1,
-			spread = -3,
-		},
-		stab_sub_acc_conc_swap_add_t1 = {
-			concealment = 1,
-			swap_speed = 1,
-			spread = 1,
-			recoil = -3,
-		},
-		swap_sub_stab_add_t2 = {
-			swap_speed = -2,
-			recoil = 2,
-		},
-		swap_sub_acc_add_t1 = {
-			swap_speed = -1,
-			spread = 1,
-		},
-		swap_sub_acc_add_t2 = {
-			swap_speed = -2,
-			spread = 2,
-		},
-		conc_swap_sub_stab_add_t1 = {
-			concealment = -1,
-			swap_speed = -1,
-			recoil = 2,
-		},
-		conc_swap_sub_acc_add_t1 = {
-			concealment = -1,
-			swap_speed = -1,
-			spread = 2,
-		},
-	},
-	stock = {
-		stab_sub_aim_conc_add_t1 = {
-			concealment = 1,
-			steelsight = 1,
-			recoil = -2,
-		},
-		stab_sub_aim_conc_add_t2 = {
-			concealment = 2,
-			steelsight = 2,
-			recoil = -4,
-		},
-		acc_sub_aim_conc_add_t1 = {
-			concealment = 1,
-			steelsight = 1,
-			spread = -2,
-		},
-		acc_sub_aim_conc_add_t2 = {
-			concealment = 2,
-			steelsight = 2,
-			spread = -4,
-		},
-		aim_conc_sub_stab_add_t1 = {
-			concealment = -1,
-			steelsight = -1,
-			recoil = 2,
-		},
-		aim_conc_sub_stab_add_t2 = {
-			concealment = -2,
-			steelsight = -2,
-			recoil = 4,
-		},
-		aim_conc_sub_acc_add_t1 = {
-			concealment = -1,
-			steelsight = -1,
-			spread = 2,
-		},
-		aim_conc_sub_acc_add_t2 = {
-			concealment = -2,
-			steelsight = -2,
-			spread = 4,
-		},
-		aim_conc_sub_acc_stab_add_t1 = {
-			concealment = -1,
-			steelsight = -1,
-			recoil = 1,
-			spread = 1,
-		},
-		aim_conc_sub_acc_stab_add_t2 = {
-			concealment = -2,
-			steelsight = -2,
-			recoil = 2,
-			spread = 2,
-		},
-	},
-	vertical_grip = {
-	},
-}
+WeaponFactoryTweakData.part_stat_presets = Eclipse:require("part_stat_presets")
 
 function WeaponFactoryTweakData:_add_parts_to_all(tweak_data)
 	local upgrade_definitions = tweak_data.upgrades.definitions
@@ -237,6 +68,16 @@ function WeaponFactoryTweakData:_add_parts_from_template(tweak_data)
 				table.insert(self[factory_id].uses_parts, part_id)
 				table.insert(self[factory_id .. "_npc"].uses_parts, part_id)
 			end
+		end
+	end
+end
+
+function WeaponFactoryTweakData:_apply_part_presets(tbl)
+	for k, v in pairs(tbl) do
+		local part_data = self.parts[k]
+		
+		if part_data and self.part_stat_presets[part_data.type] and self.part_stat_presets[part_data.type][v] then
+			part_data.stats = deep_clone(self.part_stat_presets[part_data.type][v])
 		end
 	end
 end
@@ -409,14 +250,37 @@ Hooks:PostHook(WeaponFactoryTweakData, "init", "eclipse_init", function(self)
 		a_obj = "a_o",
 	}
 
-	self.parts.wpn_fps_m4_uupg_b_long.stats.damage = 0
-	self.parts.wpn_fps_m4_uupg_b_long.stats.spread = 2
-
-	self.parts.wpn_fps_m4_uupg_b_short.stats.spread = -2
-
-	self.parts.wpn_fps_m4_uupg_s_fold.stats.spread = -1
-	self.parts.wpn_fps_m4_uupg_s_fold.stats.concealment = 1
-
+	local m4_part_stats = {
+		wpn_fps_m4_uupg_b_long = "acc_add_swap_conc_sub_t2",
+		wpn_fps_m4_uupg_b_short = "swap_conc_add_acc_sub_t2",
+		wpn_fps_m4_uupg_b_sd = "swap_conc_add_acc_sub_t1",
+		wpn_fps_m4_uupg_fg_lr300 = "stab_add_aim_sub_t1",
+		wpn_fps_m4_uupg_s_fold = "aim_conc_add_stab_sub_t1",
+		wpn_fps_upg_m4_s_pts = "stab_add_aim_sub_t1",
+		wpn_fps_upg_m4_g_ergo = "stab_add_swap_sub_t1",
+		wpn_fps_upg_m4_g_sniper = "acc_add_swap_conc_sub_t1",
+		wpn_fps_upg_m4_g_hgrip = "stab_add_swap_sub_t1",
+		wpn_fps_upg_m4_g_mgrip = "swap_conc_add_stab_sub_t1",
+		wpn_fps_upg_fg_jp = "acc_add_aim_conc_sub_t1",
+		wpn_fps_upg_fg_smr = "stab_add_aim_conc_sub_t1",
+		wpn_fps_upg_m4_s_crane = "acc_add_stab_sub_t1",
+		wpn_fps_upg_m4_s_mk46 = "acc_add_stab_sub_t2",
+		wpn_fps_upg_m4_s_ubr = "acc_stab_add_aim_conc_sub_t1",
+		wpn_fps_upg_ass_m4_fg_moe = "acc_stab_add_aim_conc_sub_t1",
+		wpn_fps_upg_ass_m4_fg_lvoa = "acc_add_aim_conc_sub_t3",
+		wpn_fps_snp_tti_s_vltor = "acc_add_aim_conc_sub_t1",
+		wpn_fps_snp_tti_g_grippy = "acc_add_swap_sub_t1",
+		wpn_fps_upg_g_m4_surgeon = "swap_conc_add_acc_sub_t1",
+		wpn_fps_sho_sko12_body_grip = "stab_add_acc_sub_t1",
+		wpn_fps_sho_sko12_stock = "stab_add_acc_sub_t1",
+		wpn_fps_m4_uupg_g_billet = "acc_swap_conc_add_stab_sub_t1",
+		wpn_fps_uupg_fg_radian = "acc_add_stab_sub_t1",
+		wpn_fps_m4_uupg_s_zulu = "aim_conc_add_acc_stab_sub_t1",
+		wpn_fps_snp_victor_g_mod3 = "stab_add_acc_sub_t1",
+		wpn_fps_snp_victor_s_mod0 = "stab_add_aim_sub_t2",
+	}	
+	self:_apply_part_presets(m4_part_stats)
+	
 	-- Make all CAR family weapons use the 30 round magazine by default
 	self.parts.wpn_fps_upg_m4_m_straight_vanilla = deep_clone(self.parts.wpn_fps_m4_uupg_m_std_vanilla)
 
@@ -433,21 +297,30 @@ Hooks:PostHook(WeaponFactoryTweakData, "init", "eclipse_init", function(self)
 	self.parts.wpn_fps_upg_m4_m_l5.stats.extra_ammo = 0
 	self.parts.wpn_fps_upg_m4_m_l5.custom_stats.ammo_offset = 5
 
-	self.parts.wpn_fps_upg_ak_b_draco.stats.damage = 0
-	self.parts.wpn_fps_upg_ak_b_draco.stats.concealment = 2
-
-	self.parts.wpn_fps_upg_ak_b_ak105.stats.damage = 0
-	self.parts.wpn_fps_upg_ak_b_ak105.stats.spread = -1
-
-	self.parts.wpn_upg_ak_s_folding.stats.recoil = -1
-	self.parts.wpn_upg_ak_s_folding.stats.concealment = 1
-
-	self.parts.wpn_upg_ak_s_skfoldable.stats.recoil = -1
-	self.parts.wpn_upg_ak_s_skfoldable.stats.concealment = 1
-
-	self.parts.wpn_upg_ak_s_psl.stats.spread = 3
-	self.parts.wpn_upg_ak_s_psl.stats.concealment = -3
-
+	local ak_part_stats = {
+		wpn_upg_ak_fg_combo2 = "acc_add_stab_sub_t1",
+		wpn_upg_ak_fg_combo3 = "stab_add_swap_conc_sub_t1",
+		wpn_upg_ak_s_psl = "acc_add_aim_conc_sub_t2",
+		wpn_upg_ak_s_skfoldable = "aim_conc_add_stab_sub_t1",
+		wpn_fps_upg_ak_g_hgrip = "stab_add_swap_sub_t1",
+		wpn_fps_upg_ak_g_pgrip = "acc_add_stab_sub_t1",
+		wpn_fps_upg_ak_g_wgrip = "stab_add_swap_sub_t2",
+		wpn_fps_upg_ak_fg_tapco = "acc_add_aim_conc_sub_t1",
+		wpn_fps_upg_fg_midwest = "stab_add_aim_sub_t1",
+		wpn_fps_upg_ak_b_draco = "swap_conc_add_acc_sub_t2",
+		wpn_fps_upg_ak_g_rk3 = "swap_conc_add_stab_sub_t1",
+		wpn_fps_upg_ak_s_solidstock = "acc_stab_add_aim_conc_sub_t1",
+		wpn_fps_upg_ak_fg_krebs = "acc_add_aim_sub_t1",
+		wpn_fps_upg_ak_fg_trax = "acc_stab_add_aim_conc_sub_t1",
+		wpn_fps_upg_ak_b_ak105 = "swap_conc_add_acc_sub_t1",
+		wpn_fps_upg_ak_g_edg = "acc_stab_add_swap_conc_sub_t1",
+		wpn_fps_upg_ak_g_gradus = "acc_swap_conc_add_stab_sub_t1",
+		wpn_fps_upg_ak_g_rk9 = "acc_add_swap_sub_t1",
+		wpn_fps_upg_ak_fg_zenitco = "acc_stab_add_aim_conc_sub_t3",
+		wpn_fps_upg_ak_s_zenitco = "acc_add_aim_sub_t2",
+	}
+	self:_apply_part_presets(ak_part_stats)
+		
 	self.parts.wpn_fps_upg_ak_m_uspalm.stats.extra_ammo = 0
 	self.parts.wpn_fps_upg_ak_m_uspalm.custom_stats.ammo_offset = 5
 
